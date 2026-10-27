@@ -1,0 +1,76 @@
+@startuml
+title Abstract Class Model
+
+skinparam classAttributeIconSize 0
+skinparam monochrome false
+
+class "$help://mdastyletransforms.htm" as E87 {
+}
+
+class "ShoppingBasket" as E93 {
+  - shoppingBasketNumber : String
+  + addLineItem() : void
+  + deleteItem() : void
+  + processOrder() : void
+  + createNewBasket() : void
+}
+
+enum "OrderStatus" as E90 {
+  - new : Integer
+  - packed : Integer
+  - dispatched : Integer
+  - delivered : Integer
+  - closed : Integer
+}
+
+class "StockItem" as E94 {
+  + Author : string
+  + catalogNumber : string
+  + costPrice : number
+  + listPrice : number
+  + title : string
+}
+
+class "LineItem" as E95 {
+  + quantity : Integer
+}
+
+class "Transaction" as E92 {
+  + date : Date
+  + orderNumber : String
+  + loadAccountHistory() : void
+  + loadOpenOrders() : void
+}
+
+class "Order" as E89 {
+  + date : Date
+  + deliveryInstructions : String
+  + orderNumber : String
+  + checkForOutstandingOrders() : void
+}
+
+class "Account" as E88 {
+  + name : String
+  + billingAddress : String
+  + emailAddress : String
+  + closed : Boolean
+  + deliveryAddress : String
+  + loadAccountDetails() : void
+  + markAccountClosed() : void
+  + createNewAccount() : void
+  + submitNewAccountDetails() : void
+  + retrieveAccountDetails() : void
+  + validateUser() : void
+}
+
+note "This is an example of an abstract Class model (an MDA Platform Independent Model - PIM).  The abstract Class model can be used to create the implementation model (an MDA Platform Specific Model - PSM).  " as Note_91
+
+E88 --> E89
+E88 --> E93
+E89 --> E95
+E93 --> E95
+E89 --> E90
+E92 --> E88
+E95 --> E94
+E92 --> E89
+@enduml

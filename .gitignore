@@ -1,0 +1,66 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.lai
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Build directories
+build/
+cmake-build-*/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Qt generated files
+*_autogen/
+.qt/
+*.moc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.user
+*.user.*
+*.suo
+*.workspace
+*~
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+
+# Keep precompiled vendor tools
+!tools/mdbtools/bin/*
+!tools/mdbtools/lib/*

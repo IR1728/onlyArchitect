@@ -1,0 +1,15 @@
+prefix=/home/iran/.local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+# Ideally we should have a versioned library eg. -lmdb-1
+# and also a versioned include path eg. -I${includedir}/libmdb-1.0
+# for parallel installability.
+
+Name: libmdbsql
+Description: libmdb based SQL engine
+Requires: libmdb
+Version: 1.0.1
+Libs: -L${libdir} -lmdbsql
+Cflags: -I${includedir}

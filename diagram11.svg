@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="925" height="683" viewBox="0 0 925 683">
+<defs>
+  <marker id="generalization" markerWidth="12" markerHeight="12" refX="12" refY="6" orient="auto">
+    <polygon points="0 0, 12 6, 0 12" fill="#ffffff" stroke="#333333" stroke-width="1.5" />
+  </marker>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10" fill="none" stroke="#333333" stroke-width="1.5" />
+  </marker>
+  <marker id="composition" markerWidth="16" markerHeight="10" refX="16" refY="5" orient="auto">
+    <polygon points="0 5, 8 0, 16 5, 8 10" fill="#333333" stroke="#333333" stroke-width="1" />
+  </marker>
+  <marker id="aggregation" markerWidth="16" markerHeight="10" refX="16" refY="5" orient="auto">
+    <polygon points="0 5, 8 0, 16 5, 8 10" fill="#ffffff" stroke="#333333" stroke-width="1.5" />
+  </marker>
+  <filter id="drop-shadow" x="-5%" y="-5%" width="115%" height="115%">
+    <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.15" />
+  </filter>
+</defs>
+
+<rect width="100%" height="100%" fill="#fcfcfc" />
+<text x="20" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#222222">Abstract Class Model (Logical)</text>
+<polyline points="726,275 589,275" fill="none" stroke="#444444" stroke-width="1.5"   />
+<polyline points="782,530.5 516.5,571" fill="none" stroke="#444444" stroke-width="1.5"   />
+<polyline points="456,271 278,271" fill="none" stroke="#444444" stroke-width="1.5"   />
+<polyline points="389,548 389,374" fill="none" stroke="#444444" stroke-width="1.5"   />
+<polyline points="518,162.5 517.5,372.5" fill="none" stroke="#444444" stroke-width="1.5"   />
+<polyline points="782,163.5 782,530.5" fill="none" stroke="#444444" stroke-width="1.5"   />
+<polyline points="288,370 281,579.5" fill="none" stroke="#444444" stroke-width="1.5"   />
+<polyline points="782,163.5 518,162.5" fill="none" stroke="#444444" stroke-width="1.5"   />
+<rect x="61" y="162" width="139" height="25" rx="2" ry="2" fill="#ffffeb" stroke="#7d7d7d" stroke-width="1.5" filter="url(#drop-shadow)" />
+<text x="130.5" y="176" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#111111">$help://mdastyletransforms.htm</text>
+<line x1="61" y1="184" x2="200" y2="184" stroke="#7d7d7d" stroke-width="1" />
+<rect x="426" y="509" width="181" height="124" rx="2" ry="2" fill="#ffffeb" stroke="#7d7d7d" stroke-width="1.5" filter="url(#drop-shadow)" />
+<text x="516.5" y="523" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#111111">ShoppingBasket</text>
+<line x1="426" y1="531" x2="607" y2="531" stroke="#7d7d7d" stroke-width="1" />
+<text x="434" y="545" font-family="monospace" font-size="11" fill="#222222">- shoppingBasketNumber : String</text>
+<line x1="426" y1="559" x2="607" y2="559" stroke="#7d7d7d" stroke-width="1" />
+<text x="434" y="573" font-family="monospace" font-size="11" fill="#222222">+ addLineItem() : void</text>
+<text x="434" y="587" font-family="monospace" font-size="11" fill="#222222">+ deleteItem() : void</text>
+<text x="434" y="601" font-family="monospace" font-size="11" fill="#222222">+ processOrder() : void</text>
+<text x="434" y="615" font-family="monospace" font-size="11" fill="#222222">+ createNewBasket() : void</text>
+<rect x="435" y="317" width="165" height="111" rx="2" ry="2" fill="#f5f5f5" stroke="#778899" stroke-width="1.5" filter="url(#drop-shadow)" />
+<text x="517.5" y="331" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#111111">OrderStatus</text>
+<line x1="435" y1="339" x2="600" y2="339" stroke="#778899" stroke-width="1" />
+<text x="443" y="353" font-family="monospace" font-size="11" fill="#222222">- new : Integer</text>
+<text x="443" y="367" font-family="monospace" font-size="11" fill="#222222">- packed : Integer</text>
+<text x="443" y="381" font-family="monospace" font-size="11" fill="#222222">- dispatched : Integer</text>
+<text x="443" y="395" font-family="monospace" font-size="11" fill="#222222">- delivered : Integer</text>
+<rect x="211" y="526" width="140" height="107" rx="2" ry="2" fill="#ffffeb" stroke="#7d7d7d" stroke-width="1.5" filter="url(#drop-shadow)" />
+<text x="281" y="540" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#111111">StockItem</text>
+<line x1="211" y1="548" x2="351" y2="548" stroke="#7d7d7d" stroke-width="1" />
+<text x="219" y="562" font-family="monospace" font-size="11" fill="#222222">+ Author : string</text>
+<text x="219" y="576" font-family="monospace" font-size="11" fill="#222222">+ catalogNumber : string</text>
+<text x="219" y="590" font-family="monospace" font-size="11" fill="#222222">+ costPrice : number</text>
+<text x="219" y="604" font-family="monospace" font-size="11" fill="#222222">+ listPrice : number</text>
+<rect x="226" y="335" width="124" height="70" rx="2" ry="2" fill="#ffffeb" stroke="#7d7d7d" stroke-width="1.5" filter="url(#drop-shadow)" />
+<text x="288" y="349" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#111111">LineItem</text>
+<line x1="226" y1="357" x2="350" y2="357" stroke="#7d7d7d" stroke-width="1" />
+<text x="234" y="371" font-family="monospace" font-size="11" fill="#222222">+ quantity : Integer</text>
+<rect x="689" y="108" width="186" height="111" rx="2" ry="2" fill="#ffffeb" stroke="#7d7d7d" stroke-width="1.5" filter="url(#drop-shadow)" />
+<text x="782" y="122" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#111111">Transaction</text>
+<line x1="689" y1="130" x2="875" y2="130" stroke="#7d7d7d" stroke-width="1" />
+<text x="697" y="144" font-family="monospace" font-size="11" fill="#222222">+ date : Date</text>
+<text x="697" y="158" font-family="monospace" font-size="11" fill="#222222">+ orderNumber : String</text>
+<line x1="689" y1="172" x2="875" y2="172" stroke="#7d7d7d" stroke-width="1" />
+<text x="697" y="186" font-family="monospace" font-size="11" fill="#222222">+ loadAccountHistory() : void</text>
+<text x="697" y="200" font-family="monospace" font-size="11" fill="#222222">+ loadOpenOrders() : void</text>
+<rect x="419" y="107" width="198" height="111" rx="2" ry="2" fill="#ffffeb" stroke="#7d7d7d" stroke-width="1.5" filter="url(#drop-shadow)" />
+<text x="518" y="121" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#111111">Order</text>
+<line x1="419" y1="129" x2="617" y2="129" stroke="#7d7d7d" stroke-width="1" />
+<text x="427" y="143" font-family="monospace" font-size="11" fill="#222222">+ date : Date</text>
+<text x="427" y="157" font-family="monospace" font-size="11" fill="#222222">+ deliveryInstructions : String</text>
+<text x="427" y="171" font-family="monospace" font-size="11" fill="#222222">+ orderNumber : String</text>
+<line x1="419" y1="185" x2="617" y2="185" stroke="#7d7d7d" stroke-width="1" />
+<text x="427" y="199" font-family="monospace" font-size="11" fill="#222222">+ checkForOutstandingOrders() : void</text>
+<rect x="689" y="428" width="186" height="205" rx="2" ry="2" fill="#ffffeb" stroke="#7d7d7d" stroke-width="1.5" filter="url(#drop-shadow)" />
+<text x="782" y="442" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#111111">Account</text>
+<line x1="689" y1="450" x2="875" y2="450" stroke="#7d7d7d" stroke-width="1" />
+<text x="697" y="464" font-family="monospace" font-size="11" fill="#222222">+ name : String</text>
+<text x="697" y="478" font-family="monospace" font-size="11" fill="#222222">+ billingAddress : String</text>
+<text x="697" y="492" font-family="monospace" font-size="11" fill="#222222">+ emailAddress : String</text>
+<text x="697" y="506" font-family="monospace" font-size="11" fill="#222222">+ closed : Boolean</text>
+<text x="697" y="520" font-family="monospace" font-size="11" fill="#222222">+ deliveryAddress : String</text>
+<line x1="689" y1="534" x2="875" y2="534" stroke="#7d7d7d" stroke-width="1" />
+<text x="697" y="548" font-family="monospace" font-size="11" fill="#222222">+ loadAccountDetails() : void</text>
+<text x="697" y="562" font-family="monospace" font-size="11" fill="#222222">+ markAccountClosed() : void</text>
+<text x="697" y="576" font-family="monospace" font-size="11" fill="#222222">+ createNewAccount() : void</text>
+<text x="697" y="590" font-family="monospace" font-size="11" fill="#222222">+ submitNewAccountDetails() : void</text>
+<text x="697" y="604" font-family="monospace" font-size="11" fill="#222222">+ retrieveAccountDetails() : void</text>
+<text x="697" y="618" font-family="monospace" font-size="11" fill="#222222">+ validateUser() : void</text>
+<polygon points="50 50, 317 50, 329 62, 329 206, 50 206" fill="#fffae0" stroke="#c7b777" stroke-width="1.2" filter="url(#drop-shadow)" />
+<polygon points="317 50, 317 62, 329 62" fill="#eee9cb" stroke="#c7b777" stroke-width="1" />
+<text x="58" y="70" font-family="Arial, sans-serif" font-size="11" fill="#333333">This is an example of an abstract Class model (an MDA Platform Independent Model</text>
+</svg>
