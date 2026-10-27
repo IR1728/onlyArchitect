@@ -260,7 +260,7 @@ void ModelBuilderWidget::onItemSelectionChanged() {
     QString html = QString(
         "<h2 style='color: #38bdf8; margin-top: 0;'>%1</h2>"
         "<p style='color: #cbd5e1; font-size: 13px; line-height: 1.5;'>"
-        "Patrón oficial Enterprise Architect para <b>%1</b>.</p>"
+        "Patrón de modelado estándar para <b>%1</b>.</p>"
         "<hr style='border: 0; border-top: 1px solid #283042; margin: 14px 0;'>"
         "<h3 style='color: #93c5fd; font-size: 14px;'>Elementos incluidos en el patrón:</h3>"
         "<ul style='color: #94a3b8; line-height: 1.6; font-size: 12px;'>"

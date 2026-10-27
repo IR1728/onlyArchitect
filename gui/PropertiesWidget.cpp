@@ -70,7 +70,7 @@ void PropertiesWidget::setupUi() {
     lblProjGroup->setStyleSheet("color: #38bdf8; font-weight: bold; font-size: 11px; margin-top: 6px;");
     formLayout->addRow(lblProjGroup);
 
-    m_authorEdit = new QLineEdit("Sparx Systems", this);
+    m_authorEdit = new QLineEdit("onlyArchitect", this);
     m_authorEdit->setReadOnly(true);
     formLayout->addRow("Author:", m_authorEdit);
 

@@ -9,7 +9,7 @@
 namespace fs = std::filesystem;
 
 void TestRealEADatabase(const std::string& path) {
-    std::cout << "[Test 1] Opening real Enterprise Architect database: " << path << "...\n";
+    std::cout << "[Test 1] Opening test repository database: " << path << "...\n";
     ea::Repository repo;
     bool ok = repo.OpenFile(path);
     assert(ok && "Failed to open repository database");
@@ -183,10 +183,10 @@ void TestDiagramManipulationAndPersistence(const std::string& db_path) {
 
 int main(int argc, char* argv[]) {
     std::cout << "==========================================\n";
-    std::cout << " Running OpenEA Comprehensive Test Suite  \n";
+    std::cout << " Running onlyArchitect Test Suite         \n";
     std::cout << "==========================================\n\n";
 
-    std::string sample_db = "/home/iran/EA/re/bin/EA_Trial/EAExample.qea";
+    std::string sample_db = "my_model.qea";
     if (argc > 1) {
         sample_db = argv[1];
     }
@@ -197,8 +197,8 @@ int main(int argc, char* argv[]) {
         std::cout << "Warning: sample database " << sample_db << " not found, skipping Test 1.\n";
     }
 
-    TestCreateAndSaveRepository("/tmp/test_openea.qea");
-    TestDiagramManipulationAndPersistence("/tmp/test_openea.qea");
+    TestCreateAndSaveRepository("/tmp/test_onlyarchitect.qea");
+    TestDiagramManipulationAndPersistence("/tmp/test_onlyarchitect.qea");
 
     std::string eapx_file = "/tmp/DiagramaCasosUsoExamen.eapx";
     if (fs::exists(eapx_file)) {

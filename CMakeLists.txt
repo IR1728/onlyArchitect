@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(OpenEA VERSION 17.2.1 LANGUAGES CXX)
+project(onlyArchitect VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,7 +22,7 @@ pkg_check_modules(CAIRO REQUIRED cairo)
 find_package(Qt6 COMPONENTS Widgets Svg SvgWidgets REQUIRED)
 
 # Core Library
-set(OPENEA_SOURCES
+set(ONLYARCHITECT_SOURCES
     src/core/Types.cpp
     src/core/Utils.cpp
     src/model/Diagram.cpp
@@ -36,29 +36,29 @@ set(OPENEA_SOURCES
     src/export/Exporters.cpp
 )
 
-add_library(openea_core STATIC ${OPENEA_SOURCES})
+add_library(onlyarchitect_core STATIC ${ONLYARCHITECT_SOURCES})
 
-target_include_directories(openea_core PUBLIC
+target_include_directories(onlyarchitect_core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${SQLITE3_INCLUDE_DIRS}
     ${CAIRO_INCLUDE_DIRS}
 )
 
-target_link_libraries(openea_core PUBLIC
+target_link_libraries(onlyarchitect_core PUBLIC
     ${SQLITE3_LIBRARIES}
     ${CAIRO_LIBRARIES}
 )
 
 # CLI Binary
-add_executable(openea cli/main.cpp)
-target_link_libraries(openea PRIVATE openea_core)
+add_executable(onlyarchitect cli/main.cpp)
+target_link_libraries(onlyarchitect PRIVATE onlyarchitect_core)
 
 # Tests Binary
-add_executable(test_openea tests/test_repo.cpp)
-target_link_libraries(test_openea PRIVATE openea_core)
+add_executable(test_onlyarchitect tests/test_repo.cpp)
+target_link_libraries(test_onlyarchitect PRIVATE onlyarchitect_core)
 
 # GUI Binary
-set(OPENEA_GUI_CORE_SOURCES
+set(ONLYARCHITECT_GUI_CORE_SOURCES
     gui/DarkTheme.hpp
     gui/MainWindow.hpp
     gui/MainWindow.cpp
@@ -100,29 +100,29 @@ set(OPENEA_GUI_CORE_SOURCES
     gui/SqlConsoleWidget.cpp
 )
 
-add_executable(openea-gui gui/main.cpp ${OPENEA_GUI_CORE_SOURCES})
-target_include_directories(openea-gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/gui)
-target_link_libraries(openea-gui PRIVATE
-    openea_core
+add_executable(onlyarchitect-gui gui/main.cpp ${ONLYARCHITECT_GUI_CORE_SOURCES})
+target_include_directories(onlyarchitect-gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/gui)
+target_link_libraries(onlyarchitect-gui PRIVATE
+    onlyarchitect_core
     Qt6::Widgets
     Qt6::Svg
     Qt6::SvgWidgets
 )
 
 # GUI Tests
-add_executable(test_gui tests/test_gui.cpp ${OPENEA_GUI_CORE_SOURCES})
+add_executable(test_gui tests/test_gui.cpp ${ONLYARCHITECT_GUI_CORE_SOURCES})
 target_include_directories(test_gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/gui)
 target_link_libraries(test_gui PRIVATE
-    openea_core
+    onlyarchitect_core
     Qt6::Widgets
     Qt6::Svg
     Qt6::SvgWidgets
 )
 
-add_executable(test_views tests/test_views.cpp ${OPENEA_GUI_CORE_SOURCES})
+add_executable(test_views tests/test_views.cpp ${ONLYARCHITECT_GUI_CORE_SOURCES})
 target_include_directories(test_views PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/gui)
 target_link_libraries(test_views PRIVATE
-    openea_core
+    onlyarchitect_core
     Qt6::Widgets
     Qt6::Svg
     Qt6::SvgWidgets
@@ -130,10 +130,10 @@ target_link_libraries(test_views PRIVATE
 
 add_executable(test_manual_compliance tests/test_manual_compliance.cpp)
 target_include_directories(test_manual_compliance PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(test_manual_compliance PRIVATE openea_core)
+target_link_libraries(test_manual_compliance PRIVATE onlyarchitect_core)
 
 # Installation
-install(TARGETS openea openea-gui openea_core
+install(TARGETS onlyarchitect onlyarchitect-gui onlyarchitect_core
     RUNTIME DESTINATION bin
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib

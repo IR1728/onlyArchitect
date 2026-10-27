@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     app.setStyleSheet(ea::gui::GetStudioDarkStyleSheet());
 
     std::cout << "==========================================\n";
-    std::cout << " Running OpenEA 8-Views Verification Suite\n";
+    std::cout << " Running onlyArchitect 8-Views Verification Suite\n";
     std::cout << "==========================================\n";
 
     MainWindow window;

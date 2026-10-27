@@ -923,7 +923,7 @@ std::string SqliteStorageEngine::SQLQuery(const std::string& sql) {
     }
 
     std::ostringstream xml;
-    xml << "<?xml version=\"1.0\"?>\n<EADATA version=\"1.0\" exporter=\"OpenEA\">\n  <Dataset_0>\n    <Data>\n";
+    xml << "<?xml version=\"1.0\"?>\n<EADATA version=\"1.0\" exporter=\"onlyArchitect\">\n  <Dataset_0>\n    <Data>\n";
 
     int cols = sqlite3_column_count(stmt);
     while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -948,7 +948,7 @@ bool SqliteStorageEngine::Execute(const std::string& sql) {
     int rc = sqlite3_exec(m_db, sql.c_str(), nullptr, nullptr, &err_msg);
     if (rc != SQLITE_OK) {
         if (err_msg) {
-            std::cerr << "OpenEA SQLite Execute Error: " << err_msg << std::endl;
+            std::cerr << "onlyArchitect SQLite Execute Error: " << err_msg << std::endl;
             sqlite3_free(err_msg);
         }
         return false;

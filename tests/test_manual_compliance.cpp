@@ -13,7 +13,7 @@
 #include "ea/export/Exporters.hpp"
 
 void VerifyStructuralModels(ea::Repository& repo) {
-    std::cout << "[1] Verificando Modelos Estructurales (manual.pdf págs 11-30)...\n";
+    std::cout << "[1] Verificando Modelos Estructurales...\n";
 
     auto model = repo.CreateModel("Structural Validation Model");
     assert(model != nullptr);
@@ -236,7 +236,7 @@ int main() {
 
     std::cout << "\n=======================================================\n";
     std::cout << " CONCLUSIÓN: EL PROGRAMA CUMPLE SATISFACTORIAMENTE CON \n";
-    std::cout << " TODOS LOS REQUISITOS DEL MANUAL DE ENTERPRISE ARCHITECT\n";
+    std::cout << " TODOS LOS REQUISITOS DE MODELADO UML Y ARQUITECTURA   \n";
     std::cout << "=======================================================\n";
     return 0;
 }

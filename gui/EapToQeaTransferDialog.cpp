@@ -13,7 +13,7 @@ EapToQeaTransferDialog::EapToQeaTransferDialog(const QString& initialSourcePath,
     auto headerLabel = new QLabel(
         "<b>Transfer Legacy Project (.EAP / .EAPX) to Modern SQLite (.QEA)</b><br>"
         "<span style='color: #666; font-size: 11px;'>"
-        "Enterprise Architect 16+ uses SQLite (.qea). This tool migrates all packages, "
+        "This tool migrates legacy projects (.eapx/.eap) into SQLite (.qea), transporting all packages, "
         "elements, diagrams, and connectors into a high-performance native repository."
         "</span>", this);
     headerLabel->setWordWrap(true);
@@ -80,7 +80,7 @@ EapToQeaTransferDialog::EapToQeaTransferDialog(const QString& initialSourcePath,
 void EapToQeaTransferDialog::onBrowseSource() {
     QString path = QFileDialog::getOpenFileName(this, "Select Source EAP / EAPX Project",
                                                 m_sourceEdit->text(),
-                                                "Enterprise Architect Legacy Projects (*.eapx *.eap);;All Files (*)");
+                                                "Legacy Projects (*.eapx *.eap);;All Files (*)");
     if (!path.isEmpty()) {
         m_sourceEdit->setText(path);
         QFileInfo fi(path);
@@ -92,7 +92,7 @@ void EapToQeaTransferDialog::onBrowseSource() {
 void EapToQeaTransferDialog::onBrowseTarget() {
     QString path = QFileDialog::getSaveFileName(this, "Select Target QEA Project",
                                                 m_targetEdit->text(),
-                                                "Enterprise Architect SQLite Repository (*.qea)");
+                                                "SQLite Repository (*.qea)");
     if (!path.isEmpty()) {
         m_targetEdit->setText(path);
     }

@@ -17,7 +17,7 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent) {
-    setWindowTitle("QtUML EA-Lite - 20 Day Trial");
+    setWindowTitle("onlyArchitect Studio");
     resize(1480, 940);
 
     createRibbon();
@@ -272,8 +272,8 @@ bool MainWindow::openFile(const QString& filePath) {
 }
 
 void MainWindow::onOpenTriggered() {
-    QString path = QFileDialog::getOpenFileName(this, "Abrir Repositorio Enterprise Architect", "",
-        "Archivos de Repositorio EA (*.qea *.feap *.eapx *.eap);;Repositorios SQLite (*.qea);;Proyectos Heredados (*.eapx *.eap);;Todos los Archivos (*)");
+    QString path = QFileDialog::getOpenFileName(this, "Abrir Repositorio", "",
+        "Archivos de Repositorio (*.qea *.feap *.eapx *.eap);;Repositorios SQLite (*.qea);;Proyectos Heredados (*.eapx *.eap);;Todos los Archivos (*)");
     if (!path.isEmpty()) {
         if (ea::EapxImporter::IsEapxFile(path.toStdString())) {
             QFileInfo fi(path);
@@ -320,7 +320,7 @@ void MainWindow::onNewTriggered() {
         if (engine.CreateNewRepository(path.toStdString())) {
             openFile(path);
             switchWorkspace(WorkspaceDiagram);
-            QMessageBox::information(this, "Éxito", "Repositorio creado correctamente con esquema compatible Enterprise Architect.");
+            QMessageBox::information(this, "Éxito", "Repositorio creado correctamente.");
         }
     }
 }
@@ -419,10 +419,10 @@ void MainWindow::onTogglePanTriggered(bool checked) {
 }
 
 void MainWindow::onAboutTriggered() {
-    QMessageBox::about(this, "QtUML EA-Lite",
-        "<h3>QtUML EA-Lite 17.2</h3>"
-        "<p>Recreación nativa de Enterprise Architect basada en C++20 y Qt 6.</p>"
-        "<p>Fiel al prototipo oficial (Ribbon, Start Page, Toolbox, Browser, Properties, Notes y Model Builder).</p>");
+    QMessageBox::about(this, "onlyArchitect Studio",
+        "<h3>onlyArchitect Studio 1.0</h3>"
+        "<p>Suite nativa de modelado y arquitectura de software basada en C++20 y Qt 6.</p>"
+        "<p>Herramienta completa de modelado con Ribbon, Start Page, Toolbox, Browser, Properties y Diagram Editor.</p>");
 }
 
 void MainWindow::onDiagramDoubleClicked(int diagramId) {

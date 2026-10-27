@@ -11,12 +11,11 @@
 void PrintUsage() {
     std::cout << R"(
 ===================================================================
- OpenEA — Reverse-Engineered Enterprise Architect C++ Platform
- Compatible with Sparx Systems Enterprise Architect 17.2 (.qea)
+ onlyArchitect — Modern C++ Software Modeling Platform
 ===================================================================
 
 Usage:
-  openea <command> [options]
+  onlyarchitect <command> [options]
 
 Commands:
   info <file.qea>
@@ -38,12 +37,12 @@ Commands:
       Run arbitrary SQL query on repository and output formatted XML.
 
   create <new_file.qea>
-      Create a new blank EA-compatible repository from scratch.
+      Create a new blank repository from scratch.
 
 Examples:
-  openea info EAExample.qea
-  openea render EAExample.qea --diagram 11 --out diagram11.svg
-  openea export EAExample.qea --diagram 11 --format plantuml --out diagram11.puml
+  onlyarchitect info model.qea
+  onlyarchitect render model.qea --diagram 11 --out diagram11.svg
+  onlyarchitect export model.qea --diagram 11 --format plantuml --out diagram11.puml
 )";
 }
 
@@ -97,7 +96,7 @@ int main(int argc, char* argv[]) {
         std::string path = argv[2];
         ea::SqliteStorageEngine engine;
         if (engine.CreateNewRepository(path)) {
-            std::cout << "Successfully created new Enterprise Architect repository at: " << path << "\n";
+            std::cout << "Successfully created new repository at: " << path << "\n";
             return 0;
         } else {
             std::cerr << "Failed to create repository at: " << path << "\n";
@@ -119,7 +118,7 @@ int main(int argc, char* argv[]) {
 
     if (cmd == "info") {
         auto counts = repo.GetCounts();
-        std::cout << "\n=== Enterprise Architect Repository Information ===\n"
+        std::cout << "\n=== onlyArchitect Repository Information ===\n"
                   << "Database Path:  " << repo.GetConnectionString() << "\n"
                   << "Engine Version: " << repo.GetLibraryVersion() << "\n"
                   << "Root Models:    " << repo.GetModels().size() << "\n"

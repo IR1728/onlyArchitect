@@ -5,7 +5,7 @@
 
 namespace ea::gui {
 
-// Colors directly sampled and matched from the QtUML EA-Lite prototype (proto2.jpeg):
+// Dark Studio palette colors:
 inline const QColor ColorCanvasBg(22, 28, 40);         // #161c28
 inline const QColor ColorCanvasGrid(36, 46, 66);       // #242e42
 inline const QColor ColorPanelBg(26, 31, 43);          // #1a1f2b

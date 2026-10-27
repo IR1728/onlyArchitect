@@ -5,9 +5,9 @@
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
-    app.setApplicationName("OpenEA Studio");
-    app.setApplicationVersion("17.2.1");
-    app.setOrganizationName("OpenEA");
+    app.setApplicationName("onlyArchitect Studio");
+    app.setApplicationVersion("1.0.0");
+    app.setOrganizationName("onlyArchitect");
 
     // Modern Fusion style with Prototype Dark Studio Theme
     app.setStyle(QStyleFactory::create("Fusion"));

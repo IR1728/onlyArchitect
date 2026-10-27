@@ -67,7 +67,7 @@ std::string EapxImporter::ConvertToSqlite(const std::string& eapx_path, std::str
 
     // Determine target path
     if (target_qea_path.empty()) {
-        std::string cache_dir = "/tmp/openea_cache";
+        std::string cache_dir = "/tmp/onlyarchitect_cache";
         fs::create_directories(cache_dir);
 
         std::string stem = fs::path(eapx_path).stem().string();

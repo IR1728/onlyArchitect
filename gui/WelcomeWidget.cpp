@@ -34,7 +34,7 @@ void WelcomeWidget::setupUi() {
     sideLayout->setContentsMargins(12, 20, 12, 20);
     sideLayout->setSpacing(6);
 
-    auto logoLabel = new QLabel("<b>OpenEA</b> Studio", leftSidebar);
+    auto logoLabel = new QLabel("<b>onlyArchitect</b> Studio", leftSidebar);
     logoLabel->setStyleSheet("font-size: 16px; color: #38bdf8; padding-bottom: 15px; border: none;");
     sideLayout->addWidget(logoLabel);
 
@@ -67,9 +67,9 @@ void WelcomeWidget::setupUi() {
 
     // Header Title
     auto titleBox = new QVBoxLayout();
-    auto titleLabel = new QLabel("Bienvenido a <b>OpenEA Studio</b>", contentWidget);
+    auto titleLabel = new QLabel("Bienvenido a <b>onlyArchitect Studio</b>", contentWidget);
     titleLabel->setStyleSheet("font-size: 24px; color: #f3f4f6; font-weight: 600;");
-    auto subtitleLabel = new QLabel("Plataforma nativa de modelado UML y arquitectura de software compatible con Enterprise Architect", contentWidget);
+    auto subtitleLabel = new QLabel("Plataforma nativa de modelado UML y arquitectura de software", contentWidget);
     subtitleLabel->setStyleSheet("font-size: 13px; color: #9ca3af;");
     titleBox->addWidget(titleLabel);
     titleBox->addWidget(subtitleLabel);
@@ -118,7 +118,7 @@ void WelcomeWidget::setupUi() {
     learnGrid->setSpacing(16);
 
     learnGrid->addWidget(createActionCard("Noticias y Actualizaciones", "Soporte C++20, renderizado vectorial Cairo y motor nativo de diagramas interactivos.", "📰", 1), 0, 0);
-    learnGrid->addWidget(createActionCard("Ingeniería Inversa con REA", "Recreación exacta del modelo de objetos COM IDualRepository y esquemas SQLite/Jet.", "🔬", 2), 0, 1);
+    learnGrid->addWidget(createActionCard("Arquitectura y Modelado", "Modelo de objetos de alto rendimiento y almacenamiento relacional SQLite.", "🔬", 2), 0, 1);
     learnGrid->addWidget(createActionCard("Guía de Modelado UML", "Documentación sobre diagramas de clases, casos de uso, secuencia, auto-layout y código.", "📚", 3), 0, 2);
 
     contentLayout->addLayout(learnGrid);
@@ -210,10 +210,8 @@ void WelcomeWidget::refreshRecentProjects() {
     }
 
     std::vector<std::pair<QString, QString>> candidateProjects = {
-        {"DiagramaCasosUsoExamen.eapx", "/home/iran/CicloAgostoDiciembre2026/Diseño/DiagramaCasosUsoExamen.eapx"},
-        {"DiagramaCasosUsoExamen.qea", "/home/iran/CicloAgostoDiciembre2026/Diseño/DiagramaCasosUsoExamen.qea"},
-        {"EAExample.qea", "/home/iran/EA/re/bin/EA_Trial/EAExample.qea"},
-        {"test_openea.qea", "/tmp/test_openea.qea"}
+        {"my_model.qea", "my_model.qea"},
+        {"test_onlyarchitect.qea", "/tmp/test_onlyarchitect.qea"}
     };
 
     int col = 0;
