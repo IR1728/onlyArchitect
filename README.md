@@ -45,7 +45,7 @@ Haz clic en el botón de tu sistema operativo para descargar directamente la úl
 | Plataforma | Descarga Directa | Cómo instalarlo |
 |---|---|---|
 | **Windows (x64)** | [onlyArchitect-Setup-windows-x64.exe](https://github.com/IR1728/onlyArchitect/releases/latest/download/onlyArchitect-Setup-windows-x64.exe) · ([Portable .zip](https://github.com/IR1728/onlyArchitect/releases/latest/download/onlyArchitect-windows-x64-portable.zip)) | Doble clic → Siguiente → Instalar (trae todas las DLLs Qt6/Cairo/SQLite y asocia `.qea`). |
-| **macOS (Apple Silicon)** | [onlyArchitect-macos-arm64.dmg](https://github.com/IR1728/onlyArchitect/releases/latest/download/onlyArchitect-macos-arm64.dmg) | Doble clic → arrastra **onlyArchitect.app** a **Aplicaciones** (auto-contenido, cero Homebrew). |
+| **macOS (Apple Silicon)** | [onlyArchitect-macos-arm64.dmg](https://github.com/IR1728/onlyArchitect/releases/latest/download/onlyArchitect-macos-arm64.dmg) | Doble clic → arrastra **onlyArchitect.app** a **Aplicaciones**. Al ser software libre firmado *ad-hoc*, si macOS muestra aviso de Gatekeeper ejecuta una sola vez: `xattr -cr /Applications/onlyArchitect.app` |
 | **Linux (Universal)** | [onlyArchitect-linux-x64.AppImage](https://github.com/IR1728/onlyArchitect/releases/latest/download/onlyArchitect-linux-x64.AppImage) | `chmod +x onlyArchitect-linux-x64.AppImage && ./onlyArchitect-linux-x64.AppImage` (cero dependencias). |
 | **Linux (Debian / Ubuntu / Mint)** | [onlyArchitect-linux-x64.deb](https://github.com/IR1728/onlyArchitect/releases/latest/download/onlyArchitect-linux-x64.deb) | `sudo apt install ./onlyArchitect-linux-x64.deb` (agrega acceso en el menú y CLI en `/usr/bin`). |
 
@@ -55,15 +55,16 @@ Haz clic en el botón de tu sistema operativo para descargar directamente la úl
 
 * **Modelado UML 2.x Completo (14 tipos de diagrama):** Clases, Interfaces, Componentes, Paquetes, Despliegue, Estructura Compuesta, Objetos, Casos de Uso, Secuencia (con lifelines, barras de activación y fragmentos combinados), Actividad, Máquina de Estados, Comunicación, Tiempos e Interacción.
 * **Compatibilidad nativa `.qea`, `.eap` / `.eapx` y XMI 2.5.1:**
-  * Motor SQLite transaccional sobre las 100 tablas estándar de `.qea`.
-  * Migración automática de repositorios legados MS Access (`.eapx` / `.eap`) a `.qea` mediante `mdbtools`.
-  * Importación y exportación XMI 2.5.1 con preservación de GUIDs y estereotipos.
+  * Motor SQLite transaccional sobre un esquema *clean-room* mínimo de **15 tablas núcleo** interoperable con repositorios `.qea`.
+  * Migración automática de repositorios legados MS Access (`.eapx` / `.eap`) a `.qea` mediante `mdbtools` opcional del sistema (`sudo apt install mdbtools` en Linux / `brew install mdbtools` en macOS).
+  * Importación y exportación **XMI 2.1 / 2.5.1** con preservación de GUIDs, estereotipos y protecciones anti-XXE / XML-DoS.
 * **Editor Gráfico Interactivo (Material Design 3 / Nord):**
   * Lienzo `QGraphicsScene` con zoom (10 % – 400 %), ajuste a rejilla, 8 asas de redimensión, selección por marco, arrastrar desde el explorador/toolbox y **Undo/Redo** completo por diagrama.
   * Validador semántico UML (reglas de conexión, multiplicidades y detección de ciclos de herencia).
 * **Colaboración Multijugador en Tiempo Real (LAN / VPN — Tailscale, ZeroTier, red local):**
-  * Servidor integrado en la GUI o binario dedicado sin interfaz (`onlyarchitect-server <proyecto.qea> --port 7777`).
+  * Servidor integrado en la GUI o binario dedicado sin interfaz (`onlyarchitect-server <proyecto.qea> --port 7777 --token <PIN>`).
   * **Cursores remotos en vivo** con nombre y color, **arrastre en vivo (~28 FPS)**, snapshots `.qea` comprimidos con zlib (`OAZ1`), recarga *in-place* sin perder zoom/cámara y **Chat de Equipo en tiempo real**.
+  * **Seguridad integrada:** PIN de sala opcional (comparación en tiempo constante), límite anti-zip-bomb (128 MiB), verificación de integridad SQLite (`PRAGMA quick_check`) y respaldo automático `.bak` antes de sobrescribir.
 * **Planificación y Colaboración persistida en `.qea`:**
   * Tablero **Kanban** real sobre `t_object.Status`, **Cronograma Gantt** visual, **Calendario de Hitos**, **Bitácora (Journal)**, **Discusiones** y **Revisiones**.
 * **Flujos reales de Diseño UML (Dominio, CUS y Secuencia):**
@@ -185,7 +186,8 @@ git push origin v1.1.0
 
 ---
 
-## 7. Licencia y Aviso de Marcas Registradas
+## 7. Autores, Licencia y Aviso de Marcas Registradas
 
+* **Autores / Mantenedores:** [@LeninRevan](https://github.com/LeninRevan) y [@IR1728](https://github.com/IR1728).
 * **Licencia:** **onlyArchitect Studio** se distribuye bajo la licencia **GNU General Public License v3.0 o posterior (`GPL-3.0-or-later`)**. Consulta [`LICENSE`](LICENSE) y los avisos de componentes de terceros (Qt6 LGPLv3/GPLv3, Cairo, SQLite3, Google Material Symbols Apache 2.0 y MDB Tools) en [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md).
 * **Aviso de Marcas:** *Enterprise Architect®* es una marca registrada de **Sparx Systems Pty Ltd**. *UML®* y *XMI®* son marcas registradas del **Object Management Group (OMG)**. **onlyArchitect** es un proyecto libre e independiente implementado desde cero para interoperabilidad con repositorios `.qea`/`.eapx` y XMI 2.5.1, y **no está afiliado ni respaldado por Sparx Systems**.
