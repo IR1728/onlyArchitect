@@ -16,7 +16,7 @@
 
 namespace ea::gui {
 
-// 1. Relationship Matrix View (interface.md pp. 408-427)
+// 1. Relationship Matrix View
 class RelationshipMatrixWidget : public QWidget {
     Q_OBJECT
 public:
@@ -43,7 +43,7 @@ private:
     std::map<std::pair<int, int>, std::string> m_overlays;
 };
 
-// 2. Gap Analysis Matrix View (interface.md pp. 434-437)
+// 2. Gap Analysis Matrix View
 class GapAnalysisMatrixWidget : public QWidget {
     Q_OBJECT
 public:
@@ -57,7 +57,7 @@ private:
     QTableWidget* m_gapTable{nullptr};
 };
 
-// 3. Specification Manager & Package Browser View (interface.md pp. 125-131, 473-481)
+// 3. Specification Manager & Package Browser View
 class SpecificationManagerWidget : public QWidget {
     Q_OBJECT
 public:
@@ -78,7 +78,7 @@ private:
     QTableWidget* m_specTable{nullptr};
 };
 
-// 4. Model Search Window - Find in Project (interface.md pp. 438-470)
+// 4. Model Search Window - Find in Project
 class ModelSearchWidget : public QWidget {
     Q_OBJECT
 public:
@@ -96,7 +96,7 @@ private:
     QTableWidget* m_resultsTable{nullptr};
 };
 
-// 5. Focus, Traceability, Relationships & Summary Dock (interface.md pp. 365-431, 471)
+// 5. Focus, Traceability, Relationships & Summary Dock
 class FocusAndTraceabilityWidget : public QWidget {
     Q_OBJECT
 public:
@@ -122,7 +122,7 @@ private:
     QTreeWidget* m_revisitTree{nullptr};
 };
 
-// 6. Portals Bar Widget (interface.md pp. 482-498)
+// 6. Portals Bar Widget
 class PortalsBarWidget : public QWidget {
     Q_OBJECT
 public:
@@ -137,7 +137,7 @@ private:
     QTreeWidget* m_portalTree{nullptr};
 };
 
-// 7. Window Selectors Dialog (Alt+1 .. Alt+7, interface.md pp. 148-177)
+// 7. Window Selectors Dialog (Alt+1 .. Alt+7)
 class WindowSelectorDialog : public QDialog {
     Q_OBJECT
 public:
@@ -150,7 +150,7 @@ signals:
     void commandSelected(const QString& commandId);
 };
 
-// 8. User Preferences Dialog (Ctrl+F9, interface.md pp. 184-228)
+// 8. User Preferences Dialog (Ctrl+F9)
 class UserPreferencesDialog : public QDialog {
     Q_OBJECT
 public:

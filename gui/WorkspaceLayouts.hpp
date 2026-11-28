@@ -13,7 +13,7 @@ class QListWidgetItem;
 
 namespace ea::gui {
 
-// Predefined layouts of the Workspace Window Selector (quick-acces-windows.md, Alt+7)
+// Predefined workspace layouts (Alt+7)
 struct SystemWorkspaceLayout {
     QString name;
     QString set;          // "Design and Construct" | "Software & Simulation"
@@ -23,7 +23,7 @@ struct SystemWorkspaceLayout {
 const std::vector<SystemWorkspaceLayout>& systemWorkspaceLayouts();
 bool isImplementedSystemLayout(const QString& name);
 
-// Per-user persistence of custom layouts and Workspace Layout dialog options (workspace.md)
+// Per-user persistence of custom layouts and Workspace Layout dialog options
 class WorkspaceLayoutStore {
 public:
     QStringList userLayoutNames() const;

@@ -123,7 +123,7 @@ SaveWorkspaceLayoutDialog::SaveWorkspaceLayoutDialog(const QStringList& existing
     auto* layout = new QVBoxLayout(this);
     auto* form = new QFormLayout();
 
-    // Selecting an existing name overwrites that layout (workspace.md)
+    // Selecting an existing name overwrites that layout
     m_nameCombo = new QComboBox(this);
     m_nameCombo->setEditable(true);
     m_nameCombo->addItems(existingUserLayouts);

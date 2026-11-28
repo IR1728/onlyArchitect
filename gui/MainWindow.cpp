@@ -506,8 +506,8 @@ bool MainWindow::applyWorkspaceLayout(const QString& name) {
     }
     if (!ea::gui::isImplementedSystemLayout(name)) return false;
 
-    // System layouts (quick-acces-windows.md, Workspace Window Selector) restricted to
-    // the windows onlyArchitect has; the Browser dock also hosts the Inspector tab.
+    // System workspace layouts restricted to the windows onlyArchitect provides;
+    // the Browser dock also hosts the Inspector tab.
     std::vector<QDockWidget*> visible;
     if (name == "Default" || name == "Core Modeling" || name == "Software Engineering") {
         visible = {m_browserDock, m_toolboxDock, m_propertiesDock, m_notesDock};

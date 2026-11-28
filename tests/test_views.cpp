@@ -166,7 +166,7 @@ int main(int argc, char* argv[]) {
     std::cout << "  - Traceability tras seleccionar elemento " << traceTargetId << ": " << traceTree->topLevelItemCount() << " raíz\n";
     assert(traceTree->topLevelItemCount() == 1);
 
-    // 8. Selectores de ventanas Alt+1 .. Alt+7 (quick-acces-windows.md)
+    // 8. Selectores de ventanas Alt+1 .. Alt+7
     std::cout << "[Alt+1..7] Verificando selectores de ventanas...\n";
     QShortcut* altShortcuts[7] = {};
     for (auto* sc : window.findChildren<QShortcut*>()) {
@@ -207,7 +207,7 @@ int main(int argc, char* argv[]) {
     std::cout << "  - Start > All Windows > Design > Search abre Find in Project (" << unavailable
               << " ventanas aún no disponibles, deshabilitadas)\n";
 
-    // 9. Workspace layouts (workspace.md)
+    // 9. Workspace layouts
     std::cout << "[Workspace Layouts] Verificando aplicar, guardar y restaurar...\n";
     assert(window.applyWorkspaceLayout("Clear"));
     for (auto* d : window.findChildren<QDockWidget*>()) assert(!d->isVisible());

@@ -14,7 +14,7 @@
 namespace ea::desktop {
 
 // ============================================================================
-// 1. Start Page Project Manager (interface.md pp. 9-14)
+// 1. Start Page Project Manager
 // ============================================================================
 struct ProjectLinkEntry {
     std::string name;
@@ -58,7 +58,7 @@ private:
 };
 
 // ============================================================================
-// 2. Diagram Filter Engine (interface.md pp. 55-56)
+// 2. Diagram Filter Engine
 // ============================================================================
 enum class DiagramFilterField {
     FilteringOff,
@@ -97,7 +97,7 @@ struct DiagramFilterCriteria {
 };
 
 // ============================================================================
-// 3. Inspector, Traceability, Relationships & Summary (interface.md pp. 393-472)
+// 3. Inspector, Traceability, Relationships & Summary
 // ============================================================================
 struct TraceNode {
     int elementId{0};
@@ -124,7 +124,7 @@ struct RelationshipRow {
 };
 
 // ============================================================================
-// 4. Relationship Matrix & Gap Analysis Matrix (interface.md pp. 408-437)
+// 4. Relationship Matrix & Gap Analysis Matrix
 // ============================================================================
 enum class MatrixDirectionFilter {
     SourceToTarget,
@@ -151,7 +151,7 @@ struct GapAnalysisMatrixResult {
 };
 
 // ============================================================================
-// 5. Specification Manager & Model Search (interface.md pp. 125-131, 438-470)
+// 5. Specification Manager & Model Search
 // ============================================================================
 struct SpecificationRow {
     int elementId{0};

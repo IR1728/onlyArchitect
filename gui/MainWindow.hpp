@@ -177,7 +177,7 @@ private:
     QDockWidget* m_notesDock{nullptr};
     QDockWidget* m_bottomDock{nullptr};
 
-    // Ventanas de análisis (interface.md: Find in Project, Traceability, Matrix, Specification)
+    // Ventanas de análisis (Find in Project, Traceability, Matrix, Specification)
     ea::gui::ModelSearchWidget* m_searchWidget{nullptr};
     ea::gui::FocusAndTraceabilityWidget* m_traceWidget{nullptr};
     ea::gui::RelationshipMatrixWidget* m_matrixWidget{nullptr};
@@ -193,7 +193,7 @@ private:
     ea::gui::CollabHubWidget* m_collabWidget{nullptr};
     QDockWidget* m_collabDock{nullptr};
 
-    // Workspace layouts (workspace.md): dock arrangement the system layouts start from
+    // Workspace layouts: dock arrangement the system layouts start from
     ea::gui::WorkspaceLayoutStore m_layoutStore;
     QByteArray m_baseDockState;
 

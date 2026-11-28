@@ -25,7 +25,7 @@ void VerifyStructuralModels(ea::Repository& repo) {
     auto model = repo.CreateModel("Structural Validation Model");
     assert(model != nullptr);
 
-    // 1.1 Class Diagram (p. 12)
+    // 1.1 Class Diagram
     auto diagClass = std::make_shared<ea::Diagram>();
     diagClass->SetName("Logical Class Model");
     diagClass->SetType(ea::DiagramType::Logical);
@@ -53,7 +53,7 @@ void VerifyStructuralModels(ea::Repository& repo) {
     connRealize->SetType(ea::ConnectorType::Realization);
     assert(repo.GetStorageEngine()->SaveConnector(*connRealize));
 
-    // 1.2 Component Diagram (p. 19-20)
+    // 1.2 Component Diagram
     auto compOrder = std::make_shared<ea::Element>();
     compOrder->SetName("OrderComponent");
     compOrder->SetType(ea::ObjectType::Component);
@@ -64,7 +64,7 @@ void VerifyStructuralModels(ea::Repository& repo) {
     portPayment->SetType(ea::ObjectType::Port);
     assert(repo.GetStorageEngine()->SaveElement(*portPayment));
 
-    // Conector Assembly y Delegate (p. 20)
+    // Conector Assembly y Delegate
     auto connAssembly = std::make_shared<ea::Connector>();
     connAssembly->SetClientID(compOrder->GetElementID());
     connAssembly->SetSupplierID(clsAccount->GetElementID());
@@ -72,7 +72,7 @@ void VerifyStructuralModels(ea::Repository& repo) {
     connAssembly->SetName("PaymentBridge");
     assert(repo.GetStorageEngine()->SaveConnector(*connAssembly));
 
-    // 1.3 Deployment Diagram (p. 21-24)
+    // 1.3 Deployment Diagram
     auto nodeServer = std::make_shared<ea::Element>();
     nodeServer->SetName("ApplicationServer");
     nodeServer->SetType(ea::ObjectType::Node);
@@ -83,7 +83,7 @@ void VerifyStructuralModels(ea::Repository& repo) {
     devDb->SetType(ea::ObjectType::Device);
     assert(repo.GetStorageEngine()->SaveElement(*devDb));
 
-    // 1.4 Package Diagram (p. 27-28)
+    // 1.4 Package Diagram
     auto pkgCore = repo.CreateModel("CoreDomain");
     auto pkgBilling = repo.CreateModel("BillingDomain");
     auto connPkgMerge = std::make_shared<ea::Connector>();
@@ -102,7 +102,7 @@ void VerifyBehavioralModels(ea::Repository& repo) {
     auto model = repo.CreateModel("Behavioral Validation Model");
     assert(model != nullptr);
 
-    // 2.1 Use Case Diagram (p. 35-37)
+    // 2.1 Use Case Diagram
     auto actorUser = std::make_shared<ea::Element>();
     actorUser->SetName("Customer");
     actorUser->SetType(ea::ObjectType::Actor);
@@ -118,7 +118,7 @@ void VerifyBehavioralModels(ea::Repository& repo) {
     ucAuth->SetType(ea::ObjectType::UseCase);
     assert(repo.GetStorageEngine()->SaveElement(*ucAuth));
 
-    // Conector Include (p. 36)
+    // Conector Include
     auto connInclude = std::make_shared<ea::Connector>();
     connInclude->SetClientID(ucCheckout->GetElementID());
     connInclude->SetSupplierID(ucAuth->GetElementID());
@@ -126,7 +126,7 @@ void VerifyBehavioralModels(ea::Repository& repo) {
     connInclude->SetStereotype("include");
     assert(repo.GetStorageEngine()->SaveConnector(*connInclude));
 
-    // 2.2 Activity Diagram (p. 32-34)
+    // 2.2 Activity Diagram
     auto actInitial = std::make_shared<ea::Element>();
     actInitial->SetName("Start");
     actInitial->SetType(ea::ObjectType::InitialNode);
@@ -147,14 +147,14 @@ void VerifyBehavioralModels(ea::Repository& repo) {
     actFinal->SetType(ea::ObjectType::FinalState);
     assert(repo.GetStorageEngine()->SaveElement(*actFinal));
 
-    // Conectores ControlFlow (p. 34)
+    // Conectores ControlFlow
     auto flow1 = std::make_shared<ea::Connector>();
     flow1->SetClientID(actInitial->GetElementID());
     flow1->SetSupplierID(actStep1->GetElementID());
     flow1->SetType(ea::ConnectorType::ControlFlow);
     assert(repo.GetStorageEngine()->SaveConnector(*flow1));
 
-    // 2.3 StateMachine Diagram (p. 38-44)
+    // 2.3 StateMachine Diagram
     auto stIdle = std::make_shared<ea::Element>();
     stIdle->SetName("IdleState");
     stIdle->SetType(ea::ObjectType::State);
@@ -172,7 +172,7 @@ void VerifyBehavioralModels(ea::Repository& repo) {
     connTransition->SetName("OnPaymentReceived");
     assert(repo.GetStorageEngine()->SaveConnector(*connTransition));
 
-    // 2.4 Sequence Diagram (p. 101-127)
+    // 2.4 Sequence Diagram
     auto diagSeq = std::make_shared<ea::Diagram>();
     diagSeq->SetName("Order Processing Sequence");
     diagSeq->SetType(ea::DiagramType::Sequence);
@@ -228,7 +228,7 @@ void VerifyRenderingAndExporters(ea::Repository& repo) {
 }
 
 void VerifyApplicationDesktopAndCleanArchitecture(ea::Repository& repo) {
-    std::cout << "[4] Verificando The Application Desktop (interface.md) y Clean Architecture...\n";
+    std::cout << "[4] Verificando Servicios de Escritorio y Clean Architecture...\n";
 
     // 4.1 Reglas de Start Page (Recent / Pinned / mínimo 2 proyectos para borrar enlace)
     ea::desktop::StartPageProjectCatalog catalog;
