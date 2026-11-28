@@ -1,0 +1,228 @@
+name: Release Multiplatform Installers
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux:
+    name: Build Linux (.AppImage & .deb)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake pkg-config libsqlite3-dev libcairo2-dev qt6-base-dev qt6-base-dev-tools qt6-svg-dev libfuse2 file
+      - name: Build & Test
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j$(nproc)
+          ctest --test-dir build --output-on-failure
+      - name: Build Debian/Ubuntu (.deb) installer
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+'; then VERSION="1.0.0"; fi
+          DEB_DIR="pkg/onlyarchitect_${VERSION}_amd64"
+          mkdir -p "$DEB_DIR/DEBIAN" \
+                   "$DEB_DIR/usr/bin" \
+                   "$DEB_DIR/usr/share/onlyarchitect/fonts" \
+                   "$DEB_DIR/usr/share/doc/onlyarchitect" \
+                   "$DEB_DIR/usr/share/applications" \
+                   "$DEB_DIR/usr/share/icons/hicolor/scalable/apps"
+          cp build/onlyarchitect build/onlyarchitect-gui build/onlyarchitect-server "$DEB_DIR/usr/bin/"
+          cp -r build/fonts/* "$DEB_DIR/usr/share/onlyarchitect/fonts/"
+          cp LICENSE THIRD_PARTY_LICENSES.md "$DEB_DIR/usr/share/doc/onlyarchitect/"
+          cp packaging/linux/onlyarchitect.desktop "$DEB_DIR/usr/share/applications/"
+          cp packaging/linux/onlyarchitect.svg "$DEB_DIR/usr/share/icons/hicolor/scalable/apps/"
+          printf '%s\n' \
+            "Package: onlyarchitect" \
+            "Version: ${VERSION}" \
+            "Section: devel" \
+            "Priority: optional" \
+            "Architecture: amd64" \
+            "Depends: libqt6widgets6t64 | libqt6widgets6, libqt6svg6, libqt6network6t64 | libqt6network6, libcairo2, libsqlite3-0" \
+            "Maintainer: onlyArchitect Team <noreply@github.com>" \
+            "Description: onlyArchitect Studio - Native UML 2.5.1 Modeling Suite" \
+            " Native C++20/Qt6 UML 2.5.1 modeling suite (.qea/.eapx/XMI 2.5.1)" \
+            " with real-time LAN/VPN collaboration." \
+            > "$DEB_DIR/DEBIAN/control"
+          chmod 0755 "$DEB_DIR/DEBIAN"
+          dpkg-deb --root-owner-group --build "$DEB_DIR" onlyArchitect-linux-x64.deb
+      - name: Build Universal Linux AppImage (zero dependencies)
+        run: |
+          mkdir -p AppDir/usr/bin AppDir/usr/share/onlyarchitect/fonts AppDir/usr/share/doc/onlyarchitect AppDir/usr/share/applications AppDir/usr/share/icons/hicolor/scalable/apps
+          cp build/onlyarchitect build/onlyarchitect-gui build/onlyarchitect-server AppDir/usr/bin/
+          cp -r build/fonts/* AppDir/usr/share/onlyarchitect/fonts/
+          cp LICENSE THIRD_PARTY_LICENSES.md AppDir/usr/share/doc/onlyarchitect/
+          cp packaging/linux/onlyarchitect.desktop AppDir/usr/share/applications/
+          cp packaging/linux/onlyarchitect.svg AppDir/usr/share/icons/hicolor/scalable/apps/
+          curl -fsSL -o linuxdeploy-x86_64.AppImage https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+          curl -fsSL -o linuxdeploy-plugin-qt-x86_64.AppImage https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+          chmod +x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          export ARCH=x86_64
+          export NO_STRIP=1
+          export QMAKE="$(command -v qmake6 || echo /usr/lib/qt6/bin/qmake)"
+          export EXTRA_QT_PLUGINS=svg
+          export LDAI_OUTPUT="onlyArchitect-linux-x64.AppImage"
+          ./linuxdeploy-x86_64.AppImage \
+            --appdir AppDir \
+            --executable AppDir/usr/bin/onlyarchitect-gui \
+            --desktop-file AppDir/usr/share/applications/onlyarchitect.desktop \
+            --icon-file AppDir/usr/share/icons/hicolor/scalable/apps/onlyarchitect.svg \
+            --plugin qt \
+            --output appimage
+          if [ ! -f onlyArchitect-linux-x64.AppImage ]; then
+            mv onlyArchitect*.AppImage onlyArchitect-linux-x64.AppImage
+          fi
+          chmod +x onlyArchitect-linux-x64.AppImage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-linux
+          path: |
+            onlyArchitect-linux-x64.AppImage
+            onlyArchitect-linux-x64.deb
+
+  build-macos:
+    name: Build macOS (.dmg Installer)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: brew install cmake pkg-config sqlite cairo qt@6
+      - name: Build & Test
+        run: |
+          QT_PREFIX="$(brew --prefix qt@6)"
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$QT_PREFIX"
+          cmake --build build -j$(sysctl -n hw.ncpu)
+          ctest --test-dir build --output-on-failure
+      - name: Build self-contained onlyArchitect.app & DMG
+        run: |
+          QT_PREFIX="$(brew --prefix qt@6)"
+          APP_BUNDLE="pkg/onlyArchitect.app"
+          mkdir -p "$APP_BUNDLE/Contents/MacOS" "$APP_BUNDLE/Contents/Resources/fonts"
+          cp packaging/macos/Info.plist "$APP_BUNDLE/Contents/Info.plist"
+          cp build/onlyarchitect-gui build/onlyarchitect build/onlyarchitect-server "$APP_BUNDLE/Contents/MacOS/"
+          cp -r build/fonts/* "$APP_BUNDLE/Contents/Resources/fonts/"
+          cp LICENSE THIRD_PARTY_LICENSES.md "$APP_BUNDLE/Contents/Resources/"
+          "$QT_PREFIX/bin/macdeployqt" "$APP_BUNDLE" -always-overwrite
+          codesign --force --deep --sign - "$APP_BUNDLE"
+          mkdir -p dmg_stage
+          cp -R "$APP_BUNDLE" dmg_stage/
+          ln -s /Applications dmg_stage/Applications
+          hdiutil create -volname "onlyArchitect Studio" -srcfolder dmg_stage -ov -format UDZO onlyArchitect-macos-arm64.dmg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-macos
+          path: onlyArchitect-macos-arm64.dmg
+
+  build-windows:
+    name: Build Windows (Setup .exe & Portable .zip)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-pkgconf
+            mingw-w64-ucrt-x86_64-sqlite3
+            mingw-w64-ucrt-x86_64-cairo
+            mingw-w64-ucrt-x86_64-qt6-base
+            mingw-w64-ucrt-x86_64-qt6-svg
+            zip
+      - name: Build & Test
+        shell: msys2 {0}
+        run: |
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j$(nproc)
+          ctest --test-dir build --output-on-failure
+      - name: Bundle Windows self-contained folder & Portable ZIP
+        shell: msys2 {0}
+        run: |
+          mkdir -p pkg/onlyArchitect-windows-x64
+          cp build/onlyarchitect.exe build/onlyarchitect-gui.exe build/onlyarchitect-server.exe pkg/onlyArchitect-windows-x64/
+          cp -r build/fonts pkg/onlyArchitect-windows-x64/
+          cp LICENSE THIRD_PARTY_LICENSES.md pkg/onlyArchitect-windows-x64/
+          WINDEPLOYQT="$(command -v windeployqt6 || command -v windeployqt-qt6 || command -v /ucrt64/share/qt6/bin/windeployqt || true)"
+          if [ -z "$WINDEPLOYQT" ]; then
+            echo "ERROR: windeployqt not found" >&2
+            find /ucrt64 -iname '*windeployqt*' 2>/dev/null || true
+            exit 1
+          fi
+          "$WINDEPLOYQT" --no-translations --no-compiler-runtime pkg/onlyArchitect-windows-x64/onlyarchitect-gui.exe
+          for bin in pkg/onlyArchitect-windows-x64/*.exe pkg/onlyArchitect-windows-x64/*/*.dll; do
+            [ -f "$bin" ] || continue
+            ldd "$bin" | awk '/\/ucrt64\/bin\// {print $3}' | xargs -r -I{} cp -u {} pkg/onlyArchitect-windows-x64/
+          done
+          cd pkg && zip -r ../onlyArchitect-windows-x64-portable.zip onlyArchitect-windows-x64
+      - name: Build Windows Installer (Setup .exe via Inno Setup)
+        shell: pwsh
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) {
+            choco install innosetup -y --no-progress
+          }
+          $ver = if ($env:GITHUB_REF_NAME -match '^v(.+)$') { $Matches[1] } else { "1.0.0" }
+          New-Item -ItemType Directory -Force -Path dist-installers | Out-Null
+          & $iscc "/DMyAppVersion=$ver" "packaging\windows\installer.iss"
+          Move-Item -Force dist-installers\onlyArchitect-Setup-windows-x64.exe .\onlyArchitect-Setup-windows-x64.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-windows
+          path: |
+            onlyArchitect-Setup-windows-x64.exe
+            onlyArchitect-windows-x64-portable.zip
+
+  publish-release:
+    name: Publish GitHub Release
+    needs: [build-linux, build-macos, build-windows]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Verify all 5 release installers exist
+        run: |
+          ls -lh artifacts
+          for f in \
+            onlyArchitect-Setup-windows-x64.exe \
+            onlyArchitect-windows-x64-portable.zip \
+            onlyArchitect-macos-arm64.dmg \
+            onlyArchitect-linux-x64.AppImage \
+            onlyArchitect-linux-x64.deb; do
+            test -s "artifacts/$f" || { echo "Missing release asset: $f" >&2; exit 1; }
+          done
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: "onlyArchitect ${{ github.ref_name }}"
+          make_latest: true
+          fail_on_unmatched_files: true
+          generate_release_notes: true
+          body: |
+            ### Descarga directa por Sistema Operativo (Sin instalar dependencias)
+
+            | Sistema | Instalador | Instrucciones |
+            |---|---|---|
+            | **Windows (x64)** | [Descargar Instalador (.exe)](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/onlyArchitect-Setup-windows-x64.exe) · [Portable (.zip)](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/onlyArchitect-windows-x64-portable.zip) | Doble clic → Siguiente → Instalar |
+            | **macOS (Apple Silicon)** | [Descargar Instalador (.dmg)](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/onlyArchitect-macos-arm64.dmg) | Doble clic → arrastrar a Aplicaciones |
+            | **Linux (Universal)** | [Descargar AppImage](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/onlyArchitect-linux-x64.AppImage) | `chmod +x onlyArchitect-linux-x64.AppImage && ./onlyArchitect-linux-x64.AppImage` |
+            | **Linux (Debian / Ubuntu)** | [Descargar Paquete (.deb)](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/onlyArchitect-linux-x64.deb) | `sudo apt install ./onlyArchitect-linux-x64.deb` |
+          files: |
+            artifacts/onlyArchitect-Setup-windows-x64.exe
+            artifacts/onlyArchitect-windows-x64-portable.zip
+            artifacts/onlyArchitect-macos-arm64.dmg
+            artifacts/onlyArchitect-linux-x64.AppImage
+            artifacts/onlyArchitect-linux-x64.deb

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=onlyArchitect Studio
+GenericName=UML Modeling Suite
+Comment=Native C++20/Qt6 UML 2.5.1 modeling suite (.qea / .eapx / XMI 2.5.1)
+Exec=onlyarchitect-gui %f
+Icon=onlyarchitect
+Terminal=false
+Categories=Development;IDE;Graphics;
+MimeType=application/x-onlyarchitect-qea;application/vnd.sqlite3;
+StartupWMClass=onlyarchitect-gui

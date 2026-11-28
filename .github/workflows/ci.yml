@@ -1,0 +1,121 @@
+name: Cross-Platform Build & Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  linux:
+    name: Linux (Ubuntu + GCC)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake pkg-config libsqlite3-dev libcairo2-dev qt6-base-dev qt6-svg-dev
+
+      - name: Configure & Build
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j$(nproc)
+
+      - name: Run CTest
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Package Linux artifact
+        run: |
+          mkdir -p dist/onlyarchitect-linux
+          cp build/onlyarchitect build/onlyarchitect-gui build/onlyarchitect-server dist/onlyarchitect-linux/
+          cp -r build/fonts dist/onlyarchitect-linux/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: onlyarchitect-linux-x64
+          path: dist/onlyarchitect-linux
+
+  macos:
+    name: macOS (Homebrew + AppleClang)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: brew install cmake pkg-config sqlite cairo qt@6
+
+      - name: Configure & Build
+        run: |
+          QT_PREFIX="$(brew --prefix qt@6)"
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$QT_PREFIX"
+          cmake --build build -j$(sysctl -n hw.ncpu)
+
+      - name: Run CTest
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Package macOS artifact
+        run: |
+          mkdir -p dist/onlyarchitect-macos
+          cp build/onlyarchitect build/onlyarchitect-gui build/onlyarchitect-server dist/onlyarchitect-macos/
+          cp -r build/fonts dist/onlyarchitect-macos/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: onlyarchitect-macos-arm64
+          path: dist/onlyarchitect-macos
+
+  windows:
+    name: Windows (MSYS2 UCRT64 + Qt6)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-pkgconf
+            mingw-w64-ucrt-x86_64-sqlite3
+            mingw-w64-ucrt-x86_64-cairo
+            mingw-w64-ucrt-x86_64-qt6-base
+            mingw-w64-ucrt-x86_64-qt6-svg
+
+      - name: Configure & Build
+        run: |
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j$(nproc)
+
+      - name: Run CTest
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Bundle Windows portable build
+        run: |
+          mkdir -p dist/onlyarchitect-windows
+          cp build/onlyarchitect.exe build/onlyarchitect-gui.exe build/onlyarchitect-server.exe dist/onlyarchitect-windows/
+          cp -r build/fonts dist/onlyarchitect-windows/
+          WINDEPLOYQT="$(command -v windeployqt6 || command -v windeployqt-qt6 || command -v /ucrt64/share/qt6/bin/windeployqt || true)"
+          if [ -z "$WINDEPLOYQT" ]; then
+            echo "ERROR: windeployqt not found" >&2
+            find /ucrt64 -iname '*windeployqt*' 2>/dev/null || true
+            exit 1
+          fi
+          "$WINDEPLOYQT" --no-translations --no-compiler-runtime dist/onlyarchitect-windows/onlyarchitect-gui.exe
+          for bin in dist/onlyarchitect-windows/*.exe dist/onlyarchitect-windows/*/*.dll; do
+            [ -f "$bin" ] || continue
+            ldd "$bin" | awk '/\/ucrt64\/bin\// {print $3}' | xargs -r -I{} cp -u {} dist/onlyarchitect-windows/
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: onlyarchitect-windows-x64
+          path: dist/onlyarchitect-windows
